@@ -8,14 +8,14 @@ const Logo = () => {
     <Link href={"/"}>
       <div
         className={cn(
-          "flex items-center justify-center hover:opacity-60 transition",
+          "flex items-center justify-center hover:opacity-60 transition invisible md:visible",
           textFont.className
         )}
       >
-        <div className="h-20 w-20 lg:h-24 lg:w-24 relative">
+        <div className="h-16 w-16 relative">
           <Image src={"/logo.svg"} fill alt="logo" />
         </div>
-        <span className="text-slate-100 text-2xl hidden lg:flex">Keeper</span>
+        <span className="text-slate-100 text-2xl ">Keeper</span>
       </div>
     </Link>
   );
