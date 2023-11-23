@@ -21,7 +21,7 @@ const LandingPage = (props: Props) => {
         textFont.className
       )}
     >
-      <div className="h-full w-full  lg:min-h-full  relative col-span-3 lg:col-span-2 order-first lg:order-last row-span-2 lg:row-span-1">
+      <div className=" w-full min-h-[25vh] lg:min-h-[80vh]  relative col-span-3 lg:col-span-2 order-first lg:order-last row-span-2 lg:row-span-1">
         <Image src={"/landing.svg"} fill alt="landing page image" />
       </div>
       <div className="col-span-3 lg:col-span-1 flex flex-col gap-4 items-center lg:justify-center justify-start row-span-1">
