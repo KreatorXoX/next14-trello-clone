@@ -3,13 +3,15 @@ import { Button } from "@/components/ui/button";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { BookmarkPlus } from "lucide-react";
 import React from "react";
+import MobileSidebar from "./mobile-sidebar";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   return (
     <nav className="flex w-full max-w-7xl mx-auto h-16 items-center shadow-sm justify-between px-4">
-      <div>
+      <div className="flex items-center gap-1 md:gap-3">
+        <MobileSidebar />
         <div className="items-center gap-6 hidden lg:flex">
           <Logo black />
           <Button size={"sm"} className="rounded-lg" variant={"primary"}>

@@ -30,9 +30,10 @@ const Sidebar = ({ storageKey = "desktop-sidebar" }: Props) => {
       infinite: true,
     },
   });
-  const defaultAccordionValue: string[] = Object.keys(isOpen!).reduce(
+
+  const defaultAccordionValue: string[] = Object.keys(isOpen).reduce(
     (acc: string[], key: string) => {
-      if (isOpen![key]) {
+      if (isOpen[key]) {
         acc.push(key);
       }
       return acc;
@@ -41,18 +42,48 @@ const Sidebar = ({ storageKey = "desktop-sidebar" }: Props) => {
   );
 
   const onOpen = (id: string) => {
-    setIsOpen((curr) => ({ ...curr, [id]: !isOpen![id] }));
+    setIsOpen((curr) => ({ ...curr, [id]: !isOpen[id] }));
   };
 
   if (!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
-    return <Skeleton />;
+    return (
+      <div className="space-y-5">
+        <div className="font-medium flex items-center justify-between px-1">
+          <span className="text-gray-600 italic">Workspaces</span>
+          <Button asChild variant="primary" size={"xs_rounded"}>
+            <Link href={"/select-org"}>
+              <Plus />
+            </Link>
+          </Button>
+        </div>
+        <div className="space-y-2">
+          <div className="flex flex-col gap-1">
+            <div className="relative">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-8 w-8 absolute bg-purple-900/30 top-1/2 left-5 transform -translate-x-1/2 -translate-y-1/2" />
+            </div>
+            <Skeleton className="h-8 w-[85%] ml-auto bg-sky-500/10" />
+            <Skeleton className="h-8 w-[85%] ml-auto bg-sky-500/10" />
+            <Skeleton className="h-8 w-[85%] ml-auto bg-sky-500/10" />
+          </div>
+          <div className="relative">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-8 w-8 absolute bg-purple-900/30 top-1/2 left-5 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="relative">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-8 w-8 absolute bg-purple-900/30 top-1/2 left-5 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="space-y-5">
-      <div className="font-medium text-xs flex items-center ">
-        <span>Workspaces</span>
-        <Button asChild variant="ghost" className="ml-auto" size={"sm"}>
+      <div className="font-medium flex items-center justify-between px-1">
+        <span className="text-gray-600 italic">Workspaces</span>
+        <Button asChild variant="primary" size={"xs_rounded"}>
           <Link href={"/select-org"}>
             <Plus />
           </Link>

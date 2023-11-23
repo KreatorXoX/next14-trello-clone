@@ -38,22 +38,22 @@ const OrganizationItem = ({
   const routes = [
     {
       label: "Boards",
-      icon: <Layout className="w-4 h-4" />,
+      icon: <Layout className="w-5 h-5" />,
       href: `/organization/${organization.id}`,
     },
     {
       label: "Activity",
-      icon: <Activity />,
+      icon: <Activity className="w-5 h-5" />,
       href: `/organization/${organization.id}/activity`,
     },
     {
       label: "Settings",
-      icon: <Settings />,
+      icon: <Settings className="w-5 h-5" />,
       href: `/organization/${organization.id}/settings`,
     },
     {
       label: "Billing",
-      icon: <CreditCard />,
+      icon: <CreditCard className="w-5 h-5" />,
       href: `/organization/${organization.id}/billing`,
     },
   ];
@@ -66,25 +66,30 @@ const OrganizationItem = ({
       <AccordionTrigger
         onClick={onOpen.bind(null, organization.id)}
         className={cn(
-          "flex items-center gap-x-2 p-1 rounded-md hover:bg-gray-300",
+          "flex items-center gap-x-2 p-2 rounded-md text-gray-600 hover:bg-gray-200 hover:no-underline hover:text-sky-700",
           isActive && !isOpen && "bg-sky-500/10 text-sky-700 "
         )}
       >
         <div className="flex items-center gap-x-2">
           <div className="w-7 h-7 relative">
-            <Image src={organization.imageUrl} fill alt="avatar" />
+            <Image
+              src={organization.imageUrl}
+              fill
+              alt="avatar"
+              className="rounded-lg border-none"
+            />
           </div>
           <span>{organization.name}</span>
         </div>
       </AccordionTrigger>
-      <AccordionContent className="p-1 text-gray-700">
+      <AccordionContent className="ml-5">
         {routes.map((route) => (
           <Button
             size={"sm"}
             key={route.href}
             onClick={() => onClick(route.href)}
             className={cn(
-              "w-full justify-start",
+              "w-full justify-start items-center flex gap-3 text-gray-500 hover:text-sky-700",
               pathname === route.href && "bg-sky-500/10 text-sky-700"
             )}
             variant={"ghost"}

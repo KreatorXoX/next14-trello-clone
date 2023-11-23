@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Define a generic type for the value stored in local storage
-type LocalStorageValue<T> = T | null;
+type LocalStorageValue<T> = T | Record<string, any>;
 
 // Define the hook with a generic type parameter for the expected value type
 export function useLocalStorage<T>(key: string, initialValue: T) {
@@ -11,7 +11,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   // Get the initial value from local storage or use the provided initial value
   const storedValue: LocalStorageValue<T> = localStorageAvailable
-    ? JSON.parse(localStorage.getItem(key) || "null")
+    ? JSON.parse(localStorage.getItem(key) || '{"none":"none"}')
     : initialValue;
 
   // Create state to hold the current value

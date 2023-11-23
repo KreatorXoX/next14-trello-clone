@@ -21,6 +21,7 @@ const buttonVariants = cva(
         primary: "bg-[#3d348b] text-primary-foreground hover:bg-[#3d348b]/90",
       },
       size: {
+        xs_rounded: "w-4 h-4 rounded-full",
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
