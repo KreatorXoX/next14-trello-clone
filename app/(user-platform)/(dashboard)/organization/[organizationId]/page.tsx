@@ -1,33 +1,31 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import React, { useCallback } from "react";
+import React from "react";
 import { createNewBoard } from "@/actions/create-board";
 import { useAction } from "@/hooks/useAction";
+import { FormInput } from "@/components/form/form-input";
+import FormSubmitButton from "@/components/form/form-submit";
 
 type Props = {};
 
 const OrganizationPage = (props: Props) => {
-  const { execute, fieldErrors } = useAction(createNewBoard, {
-    onSuccess: (data) => console.log(data.title),
-    onError: (err) => console.log(err),
-  });
-  console.log(fieldErrors);
+  const { execute, fieldErrors } = useAction(createNewBoard);
+
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
-
-    execute({ title: title });
+    execute({ title });
   };
   return (
     <div className="w-full">
       <form action={onSubmit}>
-        <input
+        <FormInput
+          label="Board Title"
           type="text"
           placeholder="Enter a board title"
           id="title"
-          name="title"
-          className="border border-gray-500 p-1 rounded-md"
+          errors={fieldErrors}
         />
-        <Button type="submit">Submit</Button>
+        <FormSubmitButton innerText="Save" />
       </form>
     </div>
   );
