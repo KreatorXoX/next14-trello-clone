@@ -6,6 +6,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import FormErrors from "./form-errors";
+import { generateFunnyName } from "@/config/generateName";
 
 type Props = {
   id: string;
@@ -25,12 +26,12 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(
     {
       id,
       label,
-      type,
+      type = "text",
       placeholder,
       required,
       disabled,
       customClasses,
-      defaultValue = "",
+      defaultValue = generateFunnyName(),
       errors,
       onBlur,
     },
