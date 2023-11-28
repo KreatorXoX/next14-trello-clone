@@ -1,5 +1,6 @@
 "use client";
 
+import { ElementRef, useRef } from "react";
 import toast from "react-hot-toast";
 import { LogOut } from "lucide-react";
 
@@ -16,6 +17,7 @@ import {
 import { FormInput } from "./form-input";
 import FormSubmitButton from "./form-submit";
 import FormBackgroundPicker from "./form-background-picker";
+import { useRouter } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
@@ -30,9 +32,14 @@ const FormNewBoard = ({
   offset = 4,
   align = "start",
 }: Props) => {
+  const router = useRouter();
+  const closeRef = useRef<ElementRef<"button">>(null);
   const { execute, fieldErrors } = useAction(createNewBoard, {
     onSuccess: (data) => {
       toast.success("New board created");
+      console.log(data);
+      closeRef.current?.click();
+      router.push(`/board/${data.id}`);
       //   toast.custom((t) => (
       //     <div
       //       className={`${
@@ -79,7 +86,9 @@ const FormNewBoard = ({
 
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
-    execute({ title });
+    const image = formData.get("image") as string;
+
+    execute({ title, image });
   };
   return (
     <Popover>
@@ -90,13 +99,16 @@ const FormNewBoard = ({
         side={side}
         className="w-80 py-2"
       >
-        <div className="text-sm text-center font-semibold">Create Board</div>
-        <PopoverClose
-          asChild
-          className="absolute top-[5px] right-2 cursor-pointer w-7 h-7 text-rose-400 hover:bg-gray-200 transition p-1 rounded-md"
-        >
-          <LogOut />
-        </PopoverClose>
+        <div className="relative py-1">
+          <div className="w-full text-sm text-center font-semibold">
+            Create Board
+          </div>
+          <PopoverClose ref={closeRef} asChild>
+            <button className="absolute -top-[2px] right-1 cursor-pointer z-10 w-7 h-7 text-rose-400 hover:bg-gray-200 transition p-1 rounded-md">
+              <LogOut />
+            </button>
+          </PopoverClose>
+        </div>
         <form className="space-y-3 my-2" action={onSubmit}>
           <div>
             <FormBackgroundPicker id="image" errors={fieldErrors} />

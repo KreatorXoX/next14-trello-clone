@@ -4,24 +4,28 @@ import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { BookmarkPlus } from "lucide-react";
 import React from "react";
 import MobileSidebar from "./mobile-sidebar";
+import FormNewBoard from "@/components/form/form-new-board";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   return (
     <nav className="flex w-full max-w-7xl mx-auto h-16 items-center shadow-sm justify-between px-4">
-      <div className="flex items-center gap-1 md:gap-3">
+      <div className="flex items-center gap-1 md:gap-3 w-full">
         <MobileSidebar />
-        <div className="items-center gap-6 hidden lg:flex">
-          <Logo black />
-          <Button size={"sm"} className="rounded-lg" variant={"primary"}>
-            Create Organization
+        <FormNewBoard side="bottom" offset={-50} align="center">
+          <div className="items-center gap-6 hidden lg:flex w-full">
+            <Logo black />
+            <Button size={"sm"} className="rounded-lg" variant={"primary"}>
+              Create Organization
+            </Button>
+          </div>
+        </FormNewBoard>
+        <FormNewBoard>
+          <Button size={"sm"} variant={"primary"} className="block lg:hidden">
+            <BookmarkPlus className="w-5" />
           </Button>
-        </div>
-
-        <Button size={"sm"} variant={"primary"} className="block lg:hidden">
-          <BookmarkPlus className="w-5" />
-        </Button>
+        </FormNewBoard>
       </div>
       <div className="flex items-center gap-2">
         <OrganizationSwitcher

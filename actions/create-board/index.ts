@@ -8,19 +8,41 @@ import { safeCreateAction } from "@/lib/safe-create-action";
 import { CreateBoardSchema } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { userId } = auth();
+  const { userId, orgId } = auth();
 
-  if (!userId)
+  if (!userId || !orgId)
     return {
       error: "Unauthorized",
     };
 
-  const { title } = data;
-
+  const { title, image } = data;
+  const [imageId, imageUsername, imageDirectLink, imageThumbUrl, imageFullUrl] =
+    image.split(process.env.NEXT_PUBLIC_SPLIT_CHAR!);
+  if (
+    !imageId ||
+    !imageUsername ||
+    !imageDirectLink ||
+    !imageThumbUrl ||
+    !imageFullUrl
+  ) {
+    return {
+      error: "Missing fields. Cannot create the board fields are required",
+    };
+  }
   let board;
 
   try {
-    board = await db.board.create({ data: { title } });
+    board = await db.board.create({
+      data: {
+        title,
+        orgId,
+        imageId,
+        imageUsername,
+        imageDirectLink,
+        imageThumbUrl,
+        imageFullUrl,
+      },
+    });
   } catch (error) {
     return {
       error: "Database Internal Error",

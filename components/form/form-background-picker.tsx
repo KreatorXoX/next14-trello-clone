@@ -18,7 +18,6 @@ type Props = {
 const FormBackgroundPicker = ({ id, errors }: Props) => {
   const [images, setImages] = useState<Record<string, any>[]>(fallbackImages);
 
-  console.log(images);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
   const { pending } = useFormStatus();
@@ -38,7 +37,7 @@ const FormBackgroundPicker = ({ id, errors }: Props) => {
           console.log("Couldnt fetch any images");
         }
       } catch (error) {
-        console.log(error);
+        console.log("err for stoping unsplash api");
         setImages(fallbackImages);
       } finally {
         setIsLoading(false);
@@ -74,15 +73,26 @@ const FormBackgroundPicker = ({ id, errors }: Props) => {
                 }
               }}
             >
+              <input
+                type="radio"
+                readOnly
+                name={id}
+                id={id}
+                className="hidden"
+                checked={selectedImage === image.id}
+                disabled={pending}
+                value={`${image.id}${process.env.NEXT_PUBLIC_SPLIT_CHAR}${image.user.name}${process.env.NEXT_PUBLIC_SPLIT_CHAR}${image.links.html}${process.env.NEXT_PUBLIC_SPLIT_CHAR}${image.urls.thumb}${process.env.NEXT_PUBLIC_SPLIT_CHAR}${image.urls.full}`}
+              />
+
               <Image
                 src={image.urls.thumb}
                 fill
                 alt="Unsplash Background Image"
                 className={cn(
-                  "object-cover rounded-md",
+                  " object-cover rounded-md",
                   selectedImage === image.id ? "rounded-full transition" : ""
                 )}
-                sizes="10vw"
+                sizes="15vw"
               />
               <Link
                 href={image.links.html}
