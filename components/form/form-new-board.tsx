@@ -1,7 +1,7 @@
 "use client";
 
 import toast from "react-hot-toast";
-import { useUser } from "@clerk/nextjs";
+import { LogOut } from "lucide-react";
 
 import { createNewBoard } from "@/actions/create-board";
 import { useAction } from "@/hooks/useAction";
@@ -15,8 +15,7 @@ import {
 
 import { FormInput } from "./form-input";
 import FormSubmitButton from "./form-submit";
-import { LogOut, User } from "lucide-react";
-import Image from "next/image";
+import FormBackgroundPicker from "./form-background-picker";
 
 type Props = {
   children: React.ReactNode;
@@ -31,11 +30,9 @@ const FormNewBoard = ({
   offset = 4,
   align = "start",
 }: Props) => {
-  const { user } = useUser();
-
   const { execute, fieldErrors } = useAction(createNewBoard, {
     onSuccess: (data) => {
-      console.log(data);
+      toast.success("New board created");
       //   toast.custom((t) => (
       //     <div
       //       className={`${
@@ -75,9 +72,8 @@ const FormNewBoard = ({
       //     </div>
       //   ));
     },
-    onError: (err) => console.log(err),
-    onComplete: () => {
-      console.log("completed");
+    onError: (err) => {
+      toast.error(err);
     },
   });
 
@@ -103,6 +99,7 @@ const FormNewBoard = ({
         </PopoverClose>
         <form className="space-y-3 my-2" action={onSubmit}>
           <div>
+            <FormBackgroundPicker id="image" errors={fieldErrors} />
             <FormInput id="title" label="Board Title" errors={fieldErrors} />
           </div>
           <FormSubmitButton innerText="Create" customClasses="w-full " />

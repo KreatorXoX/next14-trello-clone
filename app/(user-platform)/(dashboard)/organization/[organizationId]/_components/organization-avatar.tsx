@@ -28,6 +28,7 @@ const OrganizationAvatar = (props: Props) => {
           alt="Organization Avatar"
           fill
           className=" object-cover rounded-md"
+          sizes="10vw"
         />
       </div>
       <div>
