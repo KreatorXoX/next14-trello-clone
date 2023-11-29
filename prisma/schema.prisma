@@ -18,4 +18,34 @@ model Board {
   orgId           String
   title           String
   updatedAt       DateTime @updatedAt
+
+  cards Card[]
 }
+
+model Card {
+   id    String   @id @default(auto()) @map("_id") @db.ObjectId
+   title String 
+   order Int
+
+   boardId String @db.ObjectId
+   board Board @relation(fields: [boardId],references: [id],onDelete:Cascade) 
+
+   contents CardContent[]   
+
+   createdAt       DateTime @default(now())
+   updatedAt       DateTime @updatedAt
+}
+
+model CardContent {
+   id    String   @id @default(auto()) @map("_id") @db.ObjectId
+   title String 
+   order Int
+   description String?
+
+   cardId  String @db.ObjectId
+   card Card @relation(fields: [cardId],references: [id],onDelete:Cascade)
+   
+   createdAt       DateTime @default(now())
+   updatedAt       DateTime @updatedAt
+}
+
