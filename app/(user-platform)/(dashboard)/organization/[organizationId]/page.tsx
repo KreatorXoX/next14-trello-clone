@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import OrganizationAvatar from "./_components/organization-avatar";
 import { Separator } from "@/components/ui/separator";
 import BoardList from "./_components/board-list";
@@ -11,7 +11,9 @@ const OrganizationPage = (props: Props) => {
       <OrganizationAvatar />
       <Separator className="my-4" />
       <div>
-        <BoardList />
+        <Suspense fallback={<BoardList.Skeleton />}>
+          <BoardList />
+        </Suspense>
       </div>
     </div>
   );

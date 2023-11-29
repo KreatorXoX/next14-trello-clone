@@ -15,7 +15,7 @@ const Logo = ({ black }: Props) => {
         )}
       >
         <div className="h-16 w-16 relative">
-          <Image src={"/logo.svg"} fill alt="logo" />
+          <Image src={"/logo.svg"} fill alt="logo" sizes="20vw" />
         </div>
         <span className={cn("text-2xl ", textColor)}>Keeper</span>
       </div>

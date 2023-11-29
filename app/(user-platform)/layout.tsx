@@ -6,10 +6,16 @@ type Props = { children: React.ReactNode };
 
 const UserPlatformLayout = ({ children }: Props) => {
   return (
-    <ClerkProvider>
-      <Toaster />
-      {children}
-    </ClerkProvider>
+    <>
+      <ClerkProvider>
+        <Toaster
+          toastOptions={{
+            className: "text-sm font-semibold text-gray-500",
+          }}
+        />
+        {children}
+      </ClerkProvider>
+    </>
   );
 };
 

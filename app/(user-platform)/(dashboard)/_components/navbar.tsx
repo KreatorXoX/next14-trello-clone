@@ -13,14 +13,14 @@ const Navbar = (props: Props) => {
     <nav className="flex w-full max-w-7xl mx-auto h-16 items-center shadow-sm justify-between px-4">
       <div className="flex items-center gap-1 md:gap-3 w-full">
         <MobileSidebar />
-        <FormNewBoard side="bottom" offset={-50} align="center">
-          <div className="items-center gap-6 hidden lg:flex w-full">
-            <Logo black />
+        <div className="items-center gap-6 hidden lg:flex w-full">
+          <Logo black />
+          <FormNewBoard side="bottom" align="start">
             <Button size={"sm"} className="rounded-lg" variant={"primary"}>
               Create Organization
             </Button>
-          </div>
-        </FormNewBoard>
+          </FormNewBoard>
+        </div>
         <FormNewBoard>
           <Button size={"sm"} variant={"primary"} className="block lg:hidden">
             <BookmarkPlus className="w-5" />

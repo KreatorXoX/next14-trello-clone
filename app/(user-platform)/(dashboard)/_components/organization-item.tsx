@@ -59,7 +59,7 @@ const OrganizationItem = ({
   ];
 
   const onClick = (href: string) => {
-    router.push(href);
+    router.replace(href);
   };
   return (
     <AccordionItem value={organization.id} className="border-none">
@@ -77,6 +77,7 @@ const OrganizationItem = ({
               fill
               alt="avatar"
               className="rounded-lg border-none"
+              sizes="15vw"
             />
           </div>
           <span>{organization.name}</span>

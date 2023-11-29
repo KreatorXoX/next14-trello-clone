@@ -4,7 +4,7 @@ type Props = { children: React.ReactNode };
 
 const DashboardLayout = ({ children }: Props) => {
   return (
-    <div className="h-full">
+    <div className="h-[calc(100vh-4rem)]">
       <Navbar />
       {children}
     </div>
