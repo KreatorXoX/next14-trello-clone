@@ -3,13 +3,35 @@ import { useState, useRef, ElementRef } from "react";
 import CardWrapper from "./card-wrapper";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { FormInput } from "@/components/form/form-input";
+import { useParams, useRouter } from "next/navigation";
+import FormSubmitButton from "@/components/form/form-submit";
+import { Button } from "@/components/ui/button";
+import { CopyMinus, Plus } from "lucide-react";
+import { useAction } from "@/hooks/useAction";
+import { createCard } from "@/actions/create-card";
+import toast from "react-hot-toast";
 
 type Props = {};
 
 const CardForm = (props: Props) => {
+  const router = useRouter();
+
   const [isEditMode, setEditMode] = useState(false);
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
+
+  useOutsideClick(() => setEditMode(false), formRef);
+
+  const params = useParams();
+
+  const { execute, fieldErrors } = useAction(createCard, {
+    onSuccess: (data) => {
+      toast.success(`Card: ${data.title} is created`);
+      setEditMode(false);
+      router.refresh();
+    },
+    onError: (err) => toast.error(err),
+  });
 
   const onEditHandler = () => {
     setEditMode(true);
@@ -19,13 +41,39 @@ const CardForm = (props: Props) => {
       inputRef.current?.focus();
     }, 30);
   };
-  useOutsideClick(() => setEditMode(false), formRef);
+
+  const onSubmitHandler = (formData: FormData) => {
+    const title = formData.get("title") as string;
+    const boardId = params.boardId as string;
+
+    execute({ boardId, title });
+  };
 
   if (isEditMode) {
     return (
       <CardWrapper>
-        <form ref={formRef} className="w-full p-2 space-y-4">
-          <FormInput ref={inputRef} id="title" defaultValue="" />
+        <form
+          action={onSubmitHandler}
+          ref={formRef}
+          className="w-full h-full space-y-4 p-2 bg-white rounded"
+        >
+          <FormInput
+            ref={inputRef}
+            id="title"
+            placeholder="Card Title"
+            defaultValue=""
+            errors={fieldErrors}
+          />
+          <div className="flex justify-end items-center gap-4">
+            <FormSubmitButton innerText="Save card" variant="primary" />
+            <Button
+              onClick={() => setEditMode(false)}
+              className="bg-transparent  hover:bg-rose-500 group transition rounded-full h-auto w-auto m-0 p-2"
+              type="button"
+            >
+              <CopyMinus className="h-5 w-5 text-rose-500 group-hover:text-white transition" />
+            </Button>
+          </div>
         </form>
       </CardWrapper>
     );
@@ -33,10 +81,11 @@ const CardForm = (props: Props) => {
   return (
     <CardWrapper>
       <button
-        className="w-full rounded p-2 bg-white text-destructive hover:bg-white/80 transition"
-        onClick={() => setEditMode(true)}
+        className="w-full rounded bg-white font-semibold hover:bg-white/80 transition h-10 flex items-center justify-start px-4 gap-4"
+        onClick={onEditHandler}
       >
-        Add a list
+        <Plus className="w-5 h-5" />
+        <span>Add a card</span>
       </button>
     </CardWrapper>
   );
