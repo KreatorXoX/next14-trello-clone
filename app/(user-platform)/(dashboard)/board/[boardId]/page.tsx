@@ -1,8 +1,8 @@
-import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import React from "react";
 import CardList from "./_components/card-list";
+import { db } from "@/lib/db";
 
 type Props = { params: { boardId: string } };
 
@@ -12,6 +12,7 @@ const BoardPage = async ({ params }: Props) => {
   if (!orgId) {
     return redirect("/select-org");
   }
+
   const cards = await db.card.findMany({
     where: {
       boardId,
