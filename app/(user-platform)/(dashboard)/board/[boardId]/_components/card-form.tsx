@@ -38,7 +38,7 @@ const CardForm = (props: Props) => {
     // setTimeout needed because when button clicked and edit mode is activated ref dont select all or focuses the input
     // because of the conditional return
     setTimeout(() => {
-      inputRef.current?.focus();
+      inputRef.current?.select();
     }, 30);
   };
 
@@ -55,16 +55,16 @@ const CardForm = (props: Props) => {
         <form
           action={onSubmitHandler}
           ref={formRef}
-          className="w-full h-full space-y-4 p-2 bg-white rounded"
+          className="w-full space-y-5 px-2 py-3 bg-white rounded"
         >
           <FormInput
             ref={inputRef}
             id="title"
-            placeholder="Card Title"
+            placeholder="Card title"
             defaultValue=""
             errors={fieldErrors}
           />
-          <div className="flex justify-end items-center gap-4">
+          <div className="flex justify-end items-center gap-3">
             <FormSubmitButton innerText="Save card" variant="primary" />
             <Button
               onClick={() => setEditMode(false)}
@@ -81,7 +81,9 @@ const CardForm = (props: Props) => {
   return (
     <CardWrapper>
       <button
-        className="w-full rounded bg-white font-semibold hover:bg-white/80 transition h-10 flex items-center justify-start px-4 gap-4"
+        className="w-full rounded bg-white font-semibold hover:bg-white/80 transition h-10 flex items-center justify-start px-4 gap-4
+        text-neutral-700
+        "
         onClick={onEditHandler}
       >
         <Plus className="w-5 h-5" />

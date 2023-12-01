@@ -84,7 +84,7 @@ const FormNewBoard = ({
     },
   });
 
-  const onSubmit = (formData: FormData) => {
+  const onSubmitHandler = (formData: FormData) => {
     const title = formData.get("title") as string;
     const image = formData.get("image") as string;
 
@@ -109,7 +109,7 @@ const FormNewBoard = ({
             </button>
           </PopoverClose>
         </div>
-        <form className="space-y-3 my-2" action={onSubmit}>
+        <form className="space-y-3 my-2" action={onSubmitHandler}>
           <div>
             <FormBackgroundPicker id="image" errors={fieldErrors} />
             <FormInput id="title" label="Board Title" errors={fieldErrors} />

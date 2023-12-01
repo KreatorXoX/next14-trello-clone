@@ -52,7 +52,7 @@ const BoardLayout = async ({ children, params }: Props) => {
         className="h-full bg-no-repeat bg-center bg-cover relative "
         style={{
           backgroundImage: `url(${fetchedBoard?.imageFullUrl})`,
-          filter: "brightness(80%)",
+          filter: "brightness(90%)",
         }}
       >
         <BoardNavigation id={boardId} />

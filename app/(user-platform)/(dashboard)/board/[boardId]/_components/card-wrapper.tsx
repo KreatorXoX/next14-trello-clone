@@ -4,7 +4,7 @@ type Props = { children: React.ReactNode };
 
 const CardWrapper = ({ children }: Props) => {
   return (
-    <div className="shrink-0 h-full w-[250px] select-none">{children}</div>
+    <div className="shrink-0 h-full w-[300px] select-none">{children}</div>
   );
 };
 

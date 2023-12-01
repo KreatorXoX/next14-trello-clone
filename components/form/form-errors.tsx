@@ -14,7 +14,7 @@ const FormErrors = ({ id, errors }: Props) => {
     <div
       id={`error-${id}`}
       aria-live="assertive"
-      className="text-xs md:text-base text-rose-500 flex flex-row items-center gap-2 my-2"
+      className="text-xs md:text-sm text-rose-500 flex flex-row items-center gap-2 my-2"
     >
       <AlertTriangle className="w-4 " />
       <ul className="flex flex-col items-center gap-1">
