@@ -10,6 +10,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/useAction";
 import { deleteBoard } from "@/actions/delete-board";
+import { Separator } from "@/components/ui/separator";
 
 type Props = { id: string };
 
@@ -22,11 +23,12 @@ const BoardOptions = ({ id }: Props) => {
           <Settings2 className="w-5 h-5" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="space-y-4">
+      <PopoverContent className="space-y-2 text-sm">
         <div className="relative w-full">
-          <div className="text-center font-semibold text-neutral-600 ">
+          <div className="text-center font-semibold text-neutral-700 ">
             Board Actions
           </div>
+          <Separator className="my-2" />
           <PopoverClose asChild>
             <button className="absolute -top-[2px] right-0 cursor-pointer z-10 w-7 h-7 text-rose-400 hover:bg-gray-200 transition rounded-md">
               <LogOut />
@@ -35,9 +37,9 @@ const BoardOptions = ({ id }: Props) => {
         </div>
         <Button
           onClick={() => execute({ id })}
-          className="w-full"
+          className="w-full justify-start text-neutral-700 "
           size={"sm"}
-          variant={"destructive"}
+          variant={"destructive_ghost"}
           disabled={isLoading}
         >
           Delete this board

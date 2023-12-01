@@ -2,10 +2,12 @@
 
 import { updateCard } from "@/actions/update-card";
 import { FormInput } from "@/components/form/form-input";
+import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/useAction";
 import { Card } from "@prisma/client";
 import { useState, useRef, ElementRef } from "react";
 import toast from "react-hot-toast";
+import CardOptions from "./card-options";
 
 type Props = { data: Card };
 
@@ -69,17 +71,20 @@ const CardHeader = ({ data }: Props) => {
           placeholder="Card title"
         />
         <button type="submit" hidden></button>
-        <div className="w-full h-[0.15rem] rounded bg-neutral-300"></div>
+        <div className="h-[1px] w-[calc(100%-2rem)] bg-gray-200"></div>
       </form>
     );
   }
   return (
-    <div
-      onClick={onEditHandler}
-      className="font-semibold text-sm w-full flex flex-col gap-2 select-none px-2"
-    >
-      <p className="pt-2 font-medium">{title}</p>
-      <div className="w-full h-[0.15rem] rounded bg-neutral-300"></div>
+    <div className="font-semibold text-sm w-full flex flex-row justify-between select-none px-2">
+      <div
+        onClick={onEditHandler}
+        className="w-full flex flex-col gap-2 cursor-pointer"
+      >
+        <p className="pt-2 font-medium">{title}</p>
+        <div className="h-[1px] w-full bg-gray-200"></div>
+      </div>
+      <CardOptions data={data} onAddContent={() => {}} />
     </div>
   );
 };

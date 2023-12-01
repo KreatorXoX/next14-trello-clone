@@ -31,7 +31,7 @@ const FormSubmitButton = ({
       variant={variant || "primary"}
       type="submit"
       disabled={disabled || pending}
-      className={cn("text-xs", customClasses)}
+      className={cn("text-sm", customClasses)}
     >
       {innerText}
     </Button>
