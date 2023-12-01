@@ -1,6 +1,6 @@
 "use client";
 
-import { updateCard } from "@/actions/update-card";
+import { updateCard } from "@/actions/card/update-card";
 import { FormInput } from "@/components/form/form-input";
 import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/useAction";
@@ -71,12 +71,12 @@ const CardHeader = ({ data }: Props) => {
           placeholder="Card title"
         />
         <button type="submit" hidden></button>
-        <div className="h-[1px] w-[calc(100%-2rem)] bg-gray-200"></div>
+        <div className="h-[1px] w-[calc(100%-1.5rem)] bg-gray-200"></div>
       </form>
     );
   }
   return (
-    <div className="font-semibold text-sm w-full flex flex-row justify-between select-none px-2">
+    <div className="font-semibold text-sm w-full flex flex-row justify-between items-center select-none px-2">
       <div
         onClick={onEditHandler}
         className="w-full flex flex-col gap-2 cursor-pointer"
@@ -84,6 +84,7 @@ const CardHeader = ({ data }: Props) => {
         <p className="pt-2 font-medium">{title}</p>
         <div className="h-[1px] w-full bg-gray-200"></div>
       </div>
+
       <CardOptions data={data} onAddContent={() => {}} />
     </div>
   );

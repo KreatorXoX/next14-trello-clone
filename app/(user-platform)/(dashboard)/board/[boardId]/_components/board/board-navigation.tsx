@@ -17,7 +17,7 @@ const BoardNavigation = async ({ id }: Props) => {
   return (
     <div className="w-full h-12 bg-black/40 text-white flex items-center justify-between px-4">
       <BoardTitleForm data={fetchedBoard} />
-      <div className="mr-2">
+      <div className="mr-2 flex items-center">
         <BoardOptions id={id} />
       </div>
     </div>

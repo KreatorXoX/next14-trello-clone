@@ -4,7 +4,7 @@ import { ElementRef, useRef } from "react";
 import toast from "react-hot-toast";
 import { LogOut } from "lucide-react";
 
-import { createNewBoard } from "@/actions/create-board";
+import { createNewBoard } from "@/actions/board/create-board";
 import { useAction } from "@/hooks/useAction";
 
 import {

@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
-import BoardNavigation from "./_components/board-navigation";
+import BoardNavigation from "./_components/board/board-navigation";
 
 type Props = { children: React.ReactNode; params: { boardId: string } };
 

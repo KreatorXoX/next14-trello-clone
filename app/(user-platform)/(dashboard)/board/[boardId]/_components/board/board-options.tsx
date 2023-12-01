@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/useAction";
-import { deleteBoard } from "@/actions/delete-board";
+import { deleteBoard } from "@/actions/board/delete-board";
 import { Separator } from "@/components/ui/separator";
 
 type Props = { id: string };
@@ -19,7 +19,7 @@ const BoardOptions = ({ id }: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className=" p-1 rounded-full hover:bg-gray-100/50 transition hover:text-[#3d348b] cursor-pointer">
+        <button className="p-1 rounded-full hover:bg-gray-100/50 transition hover:text-[#3d348b] cursor-pointer">
           <Settings2 className="w-5 h-5" />
         </button>
       </PopoverTrigger>

@@ -8,7 +8,7 @@ import FormSubmitButton from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
 import { CopyMinus, Plus } from "lucide-react";
 import { useAction } from "@/hooks/useAction";
-import { createCard } from "@/actions/create-card";
+import { createCard } from "@/actions/card/create-card";
 import toast from "react-hot-toast";
 
 type Props = {};

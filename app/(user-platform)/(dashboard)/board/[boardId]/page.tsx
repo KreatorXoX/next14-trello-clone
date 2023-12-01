@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import React from "react";
-import CardList from "./_components/card-list";
+import CardList from "./_components/card/card-list";
 import { db } from "@/lib/db";
 
 type Props = { params: { boardId: string } };
