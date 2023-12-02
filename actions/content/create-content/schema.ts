@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-export const CreateCardSchema = z.object({
+export const CreateContentSchema = z.object({
   boardId: z.string(),
+  cardId: z.string(),
   title: z
     .string({
       required_error: "Title is required",

@@ -40,21 +40,13 @@ export const useAction = <TInput, TOutput>(
           setError(result.error);
           options.onError?.(result.error);
         }
-        if (result.fieldErrors) {
-          setFieldErrors(result.fieldErrors);
-        }
+
         if (result.data) {
           setData(result.data);
           options.onSuccess?.(result.data);
         }
-        // for clearing out the error when
-        // new and valid input registered
-        if (!result.error) {
-          setError(undefined);
-        }
-        if (!result.fieldErrors) {
-          setFieldErrors(undefined);
-        }
+
+        setFieldErrors(result.fieldErrors);
       } catch (error) {
       } finally {
         setIsLoading(false);

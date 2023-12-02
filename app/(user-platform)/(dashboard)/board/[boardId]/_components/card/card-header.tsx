@@ -9,9 +9,9 @@ import { useState, useRef, ElementRef } from "react";
 import toast from "react-hot-toast";
 import CardOptions from "./card-options";
 
-type Props = { data: Card };
+type Props = { data: Card; onAddContent: () => void };
 
-const CardHeader = ({ data }: Props) => {
+const CardHeader = ({ data, onAddContent }: Props) => {
   const [title, setTitle] = useState(data?.title);
   const [isEditMode, setEditMode] = useState(false);
   const formRef = useRef<ElementRef<"form">>(null);
@@ -54,7 +54,7 @@ const CardHeader = ({ data }: Props) => {
       <form
         action={onSubmitHandler}
         ref={formRef}
-        className="flex flex-col gap-1 px-2"
+        className="flex flex-col gap-1 px-2 pb-2"
       >
         <FormInput
           ref={inputRef}
@@ -76,7 +76,7 @@ const CardHeader = ({ data }: Props) => {
     );
   }
   return (
-    <div className="font-semibold text-sm w-full flex flex-row justify-between items-center select-none px-2">
+    <div className="font-semibold text-sm w-full flex flex-row justify-between items-center select-none px-2 pb-2">
       <div
         onClick={onEditHandler}
         className="w-full flex flex-col gap-2 cursor-pointer"
@@ -85,7 +85,7 @@ const CardHeader = ({ data }: Props) => {
         <div className="h-[1px] w-full bg-gray-200"></div>
       </div>
 
-      <CardOptions data={data} onAddContent={() => {}} />
+      <CardOptions data={data} onAddContent={onAddContent} />
     </div>
   );
 };

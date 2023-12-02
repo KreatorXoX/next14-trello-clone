@@ -3,15 +3,15 @@
 import React, { forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+
 import { cn } from "@/lib/utils";
 import FormErrors from "./form-errors";
-import { generateFunnyName } from "@/config/generateName";
+import { Textarea } from "../ui/textarea";
 
 type Props = {
   id: string;
   label?: string;
-  type?: string;
+  rows?: number;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
@@ -19,21 +19,23 @@ type Props = {
   defaultValue?: string;
   errors?: Record<string, string[] | undefined>;
   onBlur?: () => void;
+  onClick?: () => void;
 };
 
-export const FormInput = forwardRef<HTMLInputElement, Props>(
+export const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
   (
     {
       id,
       label,
-      type = "text",
+      rows = 3,
       placeholder,
       required,
       disabled,
       customClasses,
-      defaultValue = generateFunnyName(),
+      defaultValue,
       errors,
       onBlur,
+      onClick,
     },
     ref
   ) => {
@@ -47,18 +49,19 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(
               {label}
             </Label>
           ) : null}
-          <Input
+          <Textarea
             id={id}
             name={id}
+            rows={rows}
             onBlur={onBlur}
-            type={type}
+            onClick={onClick}
             defaultValue={defaultValue}
             placeholder={placeholder}
             required={required}
             disabled={disabled || pending}
             ref={ref}
             className={cn(
-              "text-sm",
+              "text-sm text-neutral-700 font-medium tracking-wider resize-none",
               customClasses,
               errors ? "border-rose-500/40" : ""
             )}
@@ -71,4 +74,4 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(
   }
 );
 
-FormInput.displayName = "FormInput";
+FormTextarea.displayName = "FormTextarea";
