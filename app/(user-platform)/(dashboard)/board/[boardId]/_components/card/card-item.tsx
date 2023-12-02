@@ -2,6 +2,7 @@ import { CardWithContent } from "@/types";
 import React, { ElementRef, useRef, useState } from "react";
 import CardHeader from "./card-header";
 import ContentForm from "../content/content-form";
+import ContentItem from "../content/content-item";
 
 type Props = {
   idx: number;
@@ -40,14 +41,9 @@ const CardItem = ({ data, idx }: Props) => {
         />
 
         {/* content list */}
-        <div className="flex flex-col w-full gap-2 px-2">
-          {data.contents.map((content) => (
-            <p
-              key={content.id}
-              className="bg-white/90 text-neutral-700 p-2 rounded hover:bg-white hover:ring-2 cursor-pointer hover:ring-neutral-700 transition"
-            >
-              {content.title}
-            </p>
+        <div className="flex flex-col w-full gap-2 p-2">
+          {data.contents.map((content, idx) => (
+            <ContentItem key={content.id} data={content} idx={idx} />
           ))}
         </div>
       </div>
