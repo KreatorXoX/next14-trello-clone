@@ -15,15 +15,15 @@ const CardList = ({ boardId, data }: Props) => {
     setOrderedData(data);
   }, [data]);
   return (
-    <DragDropContext onDragEnd={() => {}}>
-      <div className="h-[calc(100vh-10rem)] ">
+    <div className="h-[calc(100vh-10rem)] relative ">
+      <DragDropContext onDragEnd={() => {}}>
         <Droppable droppableId="cards" type="card" direction="horizontal">
           {(provided) => {
             return (
               <ul
-                className="flex gap-4"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
+                className="flex gap-4"
               >
                 {orderedData.map((card, idx) => {
                   return <CardItem key={card.id} idx={idx} data={card} />;
@@ -35,8 +35,8 @@ const CardList = ({ boardId, data }: Props) => {
             );
           }}
         </Droppable>
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+    </div>
   );
 };
 

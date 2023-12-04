@@ -30,7 +30,12 @@ const CardItem = ({ data, idx }: Props) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            className="shrink-0 w-[300px]"
+            style={{
+              ...provided.draggableProps.style,
+              position: snapshot.isDragging ? "absolute" : undefined,
+              top: 0,
+            }}
+            className="shrink-0 w-[300px] "
           >
             <div
               className="w-full rounded-md bg-gradient-to-r from-purple-900/60 to-sky-900/60 shadow-lg pb-2
