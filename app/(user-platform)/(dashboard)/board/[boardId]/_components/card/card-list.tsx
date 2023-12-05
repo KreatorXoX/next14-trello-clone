@@ -6,10 +6,22 @@ import { useEffect, useState } from "react";
 import CardItem from "./card-item";
 import { Droppable, DragDropContext, DropResult } from "@hello-pangea/dnd";
 import reorder from "@/config/reorder";
+import { useAction } from "@/hooks/useAction";
+import { reorderCards } from "@/actions/card/reorder-card";
+import toast from "react-hot-toast";
+import { reorderContent } from "@/actions/content/reorder-content";
 
 type Props = { boardId: string; data: CardWithContent[] };
 
 const CardList = ({ boardId, data }: Props) => {
+  const { execute: updateCardOrder } = useAction(reorderCards, {
+    onSuccess: () => toast.success("Cards reordered"),
+    onError: (err) => toast.error(err),
+  });
+  const { execute: updateContentOrder } = useAction(reorderContent, {
+    onSuccess: () => toast.success("Content reordered"),
+    onError: (err) => toast.error(err),
+  });
   const [orderedData, setOrderedData] = useState(data);
 
   useEffect(() => {
@@ -20,7 +32,7 @@ const CardList = ({ boardId, data }: Props) => {
     const { destination, source, type } = result;
 
     if (result.combine) {
-      if (result.type === "card") {
+      if (type === "card") {
         const shallow: CardWithContent[] = [...orderedData];
         shallow.splice(result.source.index, 1);
         setOrderedData(shallow);
@@ -42,23 +54,27 @@ const CardList = ({ boardId, data }: Props) => {
     }
 
     // reordering cards
-    if (result.type === "card") {
-      const ordered = reorder(orderedData, source.index, destination.index).map(
-        (card, idx) => ({ ...card, order: idx })
-      );
+    if (type === "card") {
+      const reorderedCards = reorder(
+        orderedData,
+        source.index,
+        destination.index
+      ).map((card, idx) => ({ ...card, order: idx }));
 
-      setOrderedData(ordered);
-      // update in the backend later
+      setOrderedData(reorderedCards);
+      updateCardOrder({ boardId, cards: reorderedCards });
       return;
     }
 
     // reordering content
-    if (result.type === "content") {
-      let data = [...orderedData];
+    if (type === "content") {
+      let cardWithUpdatedContent = [...orderedData];
 
       // source and destination cards has to be checked and re-evaluated
-      const sourceCard = data.find((card) => card.id === source.droppableId);
-      const destinationCard = data.find(
+      const sourceCard = cardWithUpdatedContent.find(
+        (card) => card.id === source.droppableId
+      );
+      const destinationCard = cardWithUpdatedContent.find(
         (card) => card.id === destination.droppableId
       );
 
@@ -76,27 +92,30 @@ const CardList = ({ boardId, data }: Props) => {
         ).map((content, idx) => ({ ...content, order: idx }));
 
         sourceCard.contents = reorderedContents;
-        setOrderedData(data);
-        // update in the backend later
+        setOrderedData(cardWithUpdatedContent);
+        updateContentOrder({ boardId, contents: reorderedContents });
         return;
       } else {
         // this is the case of content being dropped to a different card
-
         const [movedContent] = sourceCard.contents.splice(source.index, 1);
         movedContent.cardId = destination.droppableId;
 
         // add content to the new card
         destinationCard.contents.splice(destination.index, 0, movedContent);
 
-        const updatedSourceCard = sourceCard.contents.map((content, idx) => ({
-          ...content,
-          order: idx,
-        }));
+        // const updatedSourceCard = sourceCard.contents.map((content, idx) => ({
+        //   ...content,
+        //   order: idx,
+        // }));
 
-        const updatedDestinationCard = destinationCard.contents.map(
+        const updatedDestinationCardContent = destinationCard.contents.map(
           (content, idx) => ({ ...content, order: idx })
         );
         setOrderedData(data);
+        updateContentOrder({
+          boardId,
+          contents: updatedDestinationCardContent,
+        });
       }
 
       return;

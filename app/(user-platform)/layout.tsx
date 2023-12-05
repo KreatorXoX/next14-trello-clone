@@ -10,7 +10,19 @@ const UserPlatformLayout = ({ children }: Props) => {
       <ClerkProvider>
         <Toaster
           toastOptions={{
-            className: "text-sm font-semibold text-gray-500",
+            className: "text-sm font-semibold",
+            success: {
+              style: {
+                background: "rgba(61,52,139,1)",
+                color: "white",
+              },
+            },
+            error: {
+              style: {
+                background: "rgba(154,14,36,1)",
+                color: "white",
+              },
+            },
           }}
         />
         {children}
