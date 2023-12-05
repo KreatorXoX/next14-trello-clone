@@ -32,7 +32,7 @@ const BoardPage = async ({ params }: Props) => {
     },
   });
   return (
-    <div className="p-4 h-[calc(100vh-7rem)] overflow-x-auto ">
+    <div className="p-4 h-[calc(100vh-7rem)] w-full relative ">
       <CardList boardId={params.boardId} data={cards} />
     </div>
   );
