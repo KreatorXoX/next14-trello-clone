@@ -1,14 +1,21 @@
 import { CardContent } from "@prisma/client";
 import React from "react";
 import { Draggable } from "@hello-pangea/dnd";
-type Props = { data: CardContent; idx: number };
+import { useContentModal } from "@/hooks/useContentModal";
 
-const ContentItem = ({ data, idx }: Props) => {
+type Props = { data: CardContent; idx: number; boardId: string };
+
+const ContentItem = ({ data, idx, boardId }: Props) => {
+  const onOpen = useContentModal((state) => state.onOpen);
+
   return (
     <Draggable draggableId={data.id} index={idx}>
       {(provided, snapshot) => {
         return (
           <div
+            onClick={() => {
+              onOpen(data.id, boardId);
+            }}
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             ref={provided.innerRef}

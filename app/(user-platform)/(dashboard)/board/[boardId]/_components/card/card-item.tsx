@@ -4,6 +4,7 @@ import CardHeader from "./card-header";
 import ContentForm from "../content/content-form";
 import ContentItem from "../content/content-item";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
+import ContentModal from "@/components/modal/content-modal/content-modal";
 type Props = {
   idx: number;
   data: CardWithContent;
@@ -21,7 +22,6 @@ const CardItem = ({ data, idx }: Props) => {
       textareaRef.current?.focus();
     }, 30);
   };
-
   return (
     <Draggable draggableId={data.id} index={idx}>
       {(provided, snapshot) => {
@@ -75,7 +75,12 @@ const CardItem = ({ data, idx }: Props) => {
                     className="flex flex-col w-full gap-2 p-2"
                   >
                     {data.contents.map((content, idx) => (
-                      <ContentItem key={content.id} data={content} idx={idx} />
+                      <ContentItem
+                        key={content.id}
+                        data={content}
+                        idx={idx}
+                        boardId={data.boardId}
+                      />
                     ))}
                     {provided.placeholder}
                   </ul>
