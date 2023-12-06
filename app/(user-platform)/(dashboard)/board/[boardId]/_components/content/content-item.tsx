@@ -19,7 +19,7 @@ const ContentItem = ({ data, idx, boardId }: Props) => {
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             ref={provided.innerRef}
-            className="truncate bg-white/90 text-sm text-neutral-700 p-2 rounded hover:bg-white hover:ring-2 cursor-pointer hover:ring-neutral-700 transition"
+            className="truncate bg-white/90 text-sm text-neutral-700 p-2 rounded hover:bg-white hover:ring-2 cursor-pointer hover:ring-neutral-700 transition select-none"
           >
             {data.title}
           </div>

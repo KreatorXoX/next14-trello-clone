@@ -17,14 +17,15 @@ import { getContentByID } from "@/actions/content/get-content";
 import toast from "react-hot-toast";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { Keyboard, WalletCards } from "lucide-react";
+import ContentTitle from "./content-title";
 
 type Props = {};
 
 const ContentModal = (props: Props) => {
   const [isEditMode, setEditMode] = useState(false);
-  const titleInputRef = useRef<ElementRef<"input">>(null);
+
   const descriptionInputRef = useRef<ElementRef<"input">>(null);
-  useOutsideClick(() => setEditMode(false), titleInputRef);
+
   useOutsideClick(() => setEditMode(false), descriptionInputRef);
 
   const id = useContentModal((state) => state.id);
@@ -38,8 +39,6 @@ const ContentModal = (props: Props) => {
     enabled: !!id,
   });
 
-  console.log(data);
-
   useEffect(() => {
     if (error) {
       onClose();
@@ -52,20 +51,19 @@ const ContentModal = (props: Props) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            <div className="flex items-center w-full gap-1">
-              <Keyboard className="text-neutral-700 w-6 h-6" />
-              <form action="" className="space-y-4  mb-0 pb-0 ">
-                <FormInput
-                  id="title"
-                  defaultValue={data?.title}
-                  ref={titleInputRef}
-                  customClasses="cursor-pointer py-0 my-0  border-none focus-visible:italic focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-              </form>
-            </div>
+            {data ? (
+              <ContentTitle
+                id={data.id}
+                boardId={data.card.boardId}
+                cardTitle={data.card.title}
+                originalTitle={data.title}
+              />
+            ) : (
+              <ContentTitle.Skeleton />
+            )}
           </DialogTitle>
-          <DialogDescription className="text-xs font-medium">
-            Make changes to your content here. Click save when you are done.
+          <DialogDescription className="text-xs font-light text-rose-400">
+            ** Make sure to save when you are done.
           </DialogDescription>
         </DialogHeader>
 
