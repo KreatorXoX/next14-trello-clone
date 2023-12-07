@@ -21,7 +21,7 @@ const ContentTitle = ({ id, boardId, originalTitle, cardTitle }: Props) => {
   const [title, setTitle] = useState(originalTitle);
   const formRef = useRef<ElementRef<"form">>(null);
 
-  const { execute } = useAction(updateCardContent, {
+  const { execute, fieldErrors } = useAction(updateCardContent, {
     onSuccess: (data) => {
       setTitle(data.title);
       queryClient.invalidateQueries({ queryKey: ["content", data.id] });
@@ -41,13 +41,14 @@ const ContentTitle = ({ id, boardId, originalTitle, cardTitle }: Props) => {
   return (
     <div className="flex flex-col justify-start gap-0">
       <div className="flex items-center w-full gap-1">
-        <Keyboard className="text-neutral-700 w-6 h-6" />
+        <Keyboard className="text-neutral-700 w-6" />
         <form action={onSubmitHandler} className="mb-0 pb-0 " ref={formRef}>
           <FormInput
             onBlur={() => formRef.current?.requestSubmit()}
             id="title"
             defaultValue={title}
             customClasses="truncate cursor-pointer py-0 my-0  border-none focus-visible:italic focus-visible:ring-0 focus-visible:ring-offset-0"
+            errors={fieldErrors}
           />
         </form>
       </div>

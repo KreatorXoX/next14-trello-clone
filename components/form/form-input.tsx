@@ -53,6 +53,7 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(
             onBlur={onBlur}
             type={type}
             defaultValue={defaultValue}
+            autoFocus={false}
             placeholder={placeholder}
             required={required}
             disabled={disabled || pending}

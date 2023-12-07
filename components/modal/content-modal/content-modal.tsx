@@ -3,31 +3,23 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { FormInput } from "@/components/form/form-input";
 
-import React, { ElementRef, useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useContentModal } from "@/hooks/useContentModal";
 import { useQuery } from "@tanstack/react-query";
 import { getContentByID } from "@/actions/content/get-content";
 import toast from "react-hot-toast";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
-import { Keyboard, WalletCards } from "lucide-react";
+
 import ContentTitle from "./content-title";
+
+import ContentDescription from "./content-description";
 
 type Props = {};
 
 const ContentModal = (props: Props) => {
-  const [isEditMode, setEditMode] = useState(false);
-
-  const descriptionInputRef = useRef<ElementRef<"input">>(null);
-
-  useOutsideClick(() => setEditMode(false), descriptionInputRef);
-
   const id = useContentModal((state) => state.id);
   const boardId = useContentModal((state) => state.boardId);
   const isOpen = useContentModal((state) => state.isOpen);
@@ -48,9 +40,12 @@ const ContentModal = (props: Props) => {
 
   return (
     <Dialog onOpenChange={onClose} open={isOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className="sm:max-w-[425px]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle autoFocus={false}>
             {data ? (
               <ContentTitle
                 id={data.id}
@@ -63,34 +58,24 @@ const ContentModal = (props: Props) => {
             )}
           </DialogTitle>
           <DialogDescription className="text-xs font-light text-rose-400">
-            ** Make sure to save when you are done.
+            **All the changes are automatically saved!
           </DialogDescription>
         </DialogHeader>
-
-        {/* {isEditMode ? (
-          <form action="" className="space-y-4">
-            <FormInput
-              id="title"
-              defaultValue={data?.title}
-              ref={titleInputRef}
-            />
-            <FormInput
-              id="description"
-              defaultValue={data?.description || ""}
-              ref={descriptionInputRef}
-            />
-            <DialogFooter>
-              <Button type="submit" variant={"primary"}>
-                Save changes
-              </Button>
-            </DialogFooter>
-          </form>
-        ) : (
-          <div>
-            {data?.title}
-            {data?.description}
+        <div className="grid grid-cols-1 md:grid-cols-4 md:gap-3">
+          <div className="col-span-3">
+            <div className="w-full space-y-6">
+              {data ? (
+                <ContentDescription
+                  originalDescription={data.description}
+                  boardId={data.card.boardId}
+                  contentId={data.id}
+                />
+              ) : (
+                <ContentDescription.Skeleton />
+              )}
+            </div>
           </div>
-        )} */}
+        </div>
       </DialogContent>
     </Dialog>
   );

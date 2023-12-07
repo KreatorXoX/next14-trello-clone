@@ -16,7 +16,7 @@ const BoardTitleForm = ({ data }: Props) => {
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
 
-  const { execute } = useAction(updateBoard, {
+  const { execute, fieldErrors } = useAction(updateBoard, {
     onSuccess: (data) => {
       toast.success(`Title is updated : ${data.title}`);
       setTitle(data.title);
@@ -61,6 +61,7 @@ const BoardTitleForm = ({ data }: Props) => {
           text-white disabled:text-white disabled:opacity-100 disabled:italic focus-visible:ring-offset-0
           focus-visible:ring-0 focus-visible:border-none focus:visible:m-0 h-auto px-4 pt-1 pb-1 focus-visible:italic"
           placeholder="Board title"
+          errors={fieldErrors}
         />
         <button type="submit" hidden></button>
       </form>

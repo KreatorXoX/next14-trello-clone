@@ -17,7 +17,7 @@ const CardHeader = ({ data, onAddContent }: Props) => {
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
 
-  const { execute } = useAction(updateCard, {
+  const { execute, fieldErrors } = useAction(updateCard, {
     onSuccess: (data) => {
       toast.success(`Title is updated : ${data.title}`);
       setTitle(data.title);
@@ -69,6 +69,7 @@ const CardHeader = ({ data, onAddContent }: Props) => {
 
           "
           placeholder="Card title"
+          errors={fieldErrors}
         />
         <button type="submit" hidden></button>
         <div className="h-[1px] w-[calc(100%-1.5rem)] bg-gray-200"></div>
