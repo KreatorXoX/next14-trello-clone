@@ -109,8 +109,11 @@ const ContentDescription = ({
 ContentDescription.Skeleton = function DescriptionSkeleton() {
   return (
     <div className="flex flex-col justify-start w-full gap-1 mt-2">
-      <Skeleton className="bg-neutral-700/20 h-8" />
-      <Skeleton className="bg-neutral-700/20 h-16" />
+      <div className="flex items-center gap-3">
+        <Skeleton className="bg-neutral-700/20 h-6 w-6" />
+        <Skeleton className="bg-neutral-700/20 h-6 w-1/2" />
+      </div>
+      <Skeleton className="bg-neutral-700/20 h-20 ml-9" />
     </div>
   );
 };
