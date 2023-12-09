@@ -23,6 +23,7 @@ const buttonVariants = cva(
         primary: "bg-[#3d348b] text-primary-foreground hover:bg-[#3d348b]/90",
         primary_ghost: "hover:bg-[#3d348b]/60 hover:text-white",
         edit: "bg-transparent hover:bg-white/50 hover:text-black transition",
+        copy: "bg-neutral-100 text-neutral-500 hover:bg-neutral-500 hover:text-neutral-100 transition",
       },
       size: {
         xs_rounded: "w-4 h-4 rounded-full",
@@ -30,6 +31,7 @@ const buttonVariants = cva(
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        inline: "w-full h-auto p-1",
       },
     },
     defaultVariants: {

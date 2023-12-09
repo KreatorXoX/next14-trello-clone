@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import ContentTitle from "./content-title";
 
 import ContentDescription from "./content-description";
+import ContentOptions from "./content-options";
 
 type Props = {};
 
@@ -58,7 +59,7 @@ const ContentModal = (props: Props) => {
             )}
           </DialogTitle>
           <DialogDescription className="text-xs font-light text-rose-400">
-            **All the changes are automatically saved!
+            ** Changes on title are automatically saved!
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-4 md:gap-3">
@@ -75,6 +76,11 @@ const ContentModal = (props: Props) => {
               )}
             </div>
           </div>
+          {data ? (
+            <ContentOptions id={data.id} boardId={data.card.boardId} />
+          ) : (
+            <ContentOptions.Skeleton />
+          )}
         </div>
       </DialogContent>
     </Dialog>
