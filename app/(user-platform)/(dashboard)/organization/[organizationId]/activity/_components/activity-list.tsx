@@ -4,10 +4,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import React from "react";
 
-type Props = {};
+type Props = { orgId: string };
 
-const ActivityList = async (props: Props) => {
-  const acitivityLogs = await getAllLogs();
+const ActivityList = async ({ orgId }: Props) => {
+  const acitivityLogs = await getAllLogs(orgId);
 
   return acitivityLogs.length > 0 ? (
     <ol className="flex flex-col gap-4 my-4">

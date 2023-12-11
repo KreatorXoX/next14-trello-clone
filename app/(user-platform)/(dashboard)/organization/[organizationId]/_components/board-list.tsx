@@ -1,18 +1,20 @@
 import React from "react";
-import { auth } from "@clerk/nextjs";
+
 import { ClipboardList, FileQuestion } from "lucide-react";
-import { redirect } from "next/navigation";
+
 import CustomTooltip from "@/components/custom-tooltip";
 import FormNewBoard from "@/components/form/form-new-board";
-import { db } from "@/lib/db";
+
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getAllBoards } from "@/actions/board/get-all-boards";
 
-type Props = {};
+type Props = {
+  orgId: string;
+};
 
-const BoardList = async (props: Props) => {
-  const fetchedBoards = await getAllBoards();
+const BoardList = async ({ orgId }: Props) => {
+  const fetchedBoards = await getAllBoards(orgId);
 
   return (
     <div className="space-y-4">

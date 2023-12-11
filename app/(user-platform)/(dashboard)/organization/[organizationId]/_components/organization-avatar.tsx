@@ -1,15 +1,16 @@
-"use client";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useOrganization } from "@clerk/nextjs";
+import { clerkClient } from "@clerk/nextjs";
 import { Receipt } from "lucide-react";
 import Image from "next/image";
 
-type Props = {};
+type Props = { orgId: string };
 
-const OrganizationAvatar = (props: Props) => {
-  const { isLoaded, organization } = useOrganization();
+const OrganizationAvatar = async ({ orgId }: Props) => {
+  const organization = await clerkClient.organizations.getOrganization({
+    organizationId: orgId,
+  });
 
-  if (!isLoaded) {
+  if (!organization) {
     return (
       <div className="flex gap-2 items-center">
         <Skeleton className="w-10 h-10 bg-purple-900/30" />
@@ -36,9 +37,9 @@ const OrganizationAvatar = (props: Props) => {
           <p>{organization?.name.toUpperCase()}</p>
 
           <span className="text-xs text-neutral-500 italic">
-            {organization?.membersCount +
+            {organization?.members_count +
               `${
-                organization?.membersCount && organization.membersCount > 1
+                organization?.members_count && organization.members_count > 1
                   ? " - Members"
                   : " - Member"
               }`}

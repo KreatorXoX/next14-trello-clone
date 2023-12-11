@@ -3,12 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { Log } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
-
+import { cache } from "react";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-export const getAllLogs = async (): Promise<Log[]> => {
-  const { userId, orgId } = auth();
+export const getAllLogs = cache(async (orgId: string): Promise<Log[]> => {
+  const { userId } = auth();
 
   let logs;
 
@@ -31,4 +31,4 @@ export const getAllLogs = async (): Promise<Log[]> => {
 
   revalidatePath(`/organization/${orgId}`);
   return logs;
-};
+});

@@ -3,16 +3,18 @@ import OrganizationAvatar from "./_components/organization-avatar";
 import { Separator } from "@/components/ui/separator";
 import BoardList from "./_components/board-list";
 
-type Props = {};
-
-const OrganizationPage = (props: Props) => {
+const OrganizationPage = ({
+  params: { organizationId },
+}: {
+  params: { organizationId: string };
+}) => {
   return (
     <div className="w-full">
-      <OrganizationAvatar />
+      <OrganizationAvatar orgId={organizationId} />
       <Separator className="my-4" />
       <div>
         <Suspense fallback={<BoardList.Skeleton />}>
-          <BoardList />
+          <BoardList orgId={organizationId} />
         </Suspense>
       </div>
     </div>

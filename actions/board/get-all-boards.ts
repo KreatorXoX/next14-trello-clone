@@ -1,13 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Board, Log } from "@prisma/client";
+import { Board } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
-
+import { cache } from "react";
 import { db } from "@/lib/db";
 
-export const getAllBoards = async (): Promise<Board[]> => {
-  const { userId, orgId } = auth();
+export const getAllBoards = cache(async (orgId: string): Promise<Board[]> => {
+  const { userId } = auth();
 
   let boards;
 
@@ -30,4 +30,4 @@ export const getAllBoards = async (): Promise<Board[]> => {
 
   revalidatePath(`/organization/${orgId}`);
   return boards;
-};
+});
