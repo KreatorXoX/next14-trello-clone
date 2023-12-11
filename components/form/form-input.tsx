@@ -6,7 +6,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import FormErrors from "./form-errors";
-import { generateFunnyName } from "@/config/generateName";
+import { generateFunnyName } from "@/config/generate-funny-name";
 
 type Props = {
   id: string;

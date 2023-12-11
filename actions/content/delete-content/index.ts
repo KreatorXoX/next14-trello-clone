@@ -1,10 +1,14 @@
 "use server";
 
-import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./input-types";
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { ACTION, ENTITY } from "@prisma/client";
+import { auth } from "@clerk/nextjs";
+
+import { db } from "@/lib/db";
 import { safeCreateAction } from "@/lib/safe-create-action";
+import { createLog } from "@/lib/create-log";
+
+import { InputType, ReturnType } from "./input-types";
 import { DeleteContentSchema } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -34,6 +38,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         error: "No content found with the given criteria",
       };
     }
+    await createLog({
+      entity: ENTITY.CONTENT,
+      entityId: contentToDelete.id,
+      entityTitle: contentToDelete.title,
+      action: ACTION.DELETE,
+    });
   } catch (error) {
     console.log(error);
     return {

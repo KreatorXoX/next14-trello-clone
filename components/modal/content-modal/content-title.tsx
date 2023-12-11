@@ -25,6 +25,7 @@ const ContentTitle = ({ id, boardId, originalTitle, cardTitle }: Props) => {
     onSuccess: (data) => {
       setTitle(data.title);
       queryClient.invalidateQueries({ queryKey: ["content", data.id] });
+      queryClient.invalidateQueries({ queryKey: ["log", data.id] });
       toast.success(`Title updated to : ${data.title}`);
     },
     onError: (err) => toast.error(err),

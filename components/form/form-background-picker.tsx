@@ -4,8 +4,8 @@ import { useFormStatus } from "react-dom";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
-import { unsplash } from "@/config/generateBackgroundImages";
-import { fallbackImages } from "@/config/fallbackImages";
+import { unsplash } from "@/config/generate-background-images";
+import { fallbackImages } from "@/config/fallback-images";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import FormErrors from "./form-errors";
@@ -25,7 +25,7 @@ const FormBackgroundPicker = ({ id, errors }: Props) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        throw new Error("no need to call unsplash api for the development");
+        // throw new Error("no need to call unsplash api for the development");
         const result = await unsplash.photos.getRandom({
           collectionIds: ["317099"],
           count: 6,

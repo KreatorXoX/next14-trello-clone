@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAction } from "@/hooks/useAction";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useQueryClient } from "@tanstack/react-query";
-import { BookText } from "lucide-react";
+import { Text } from "lucide-react";
 import React, { ElementRef, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -37,6 +37,7 @@ const ContentDescription = ({
       setDescription(data.description);
       toast.success("Description is updated");
       queryClient.invalidateQueries({ queryKey: ["content", data.id] });
+      queryClient.invalidateQueries({ queryKey: ["log", data.id] });
       setEditMode(false);
     },
     onError: (err) => {
@@ -67,7 +68,7 @@ const ContentDescription = ({
   };
   return (
     <div className="flex items-start gap-3 w-full">
-      <BookText className="text-neutral-700" size={30} />
+      <Text className="text-neutral-700" size={28} />
       <div className="w-full space-y-2">
         <p className="text-sm font-semibold text-neutral-700">Descripton</p>
         {isEditMode ? (

@@ -1,38 +1,41 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
-import { ContentWithCard } from "@/types";
+import { revalidatePath } from "next/cache";
 
-export const getContentByID = async (data: {
+import { Log } from "@prisma/client";
+
+export const getLogs = async (data: {
   contentId: string;
   boardId: string;
-}): Promise<ContentWithCard> => {
+}): Promise<Log[]> => {
   const { userId, orgId } = auth();
 
   const { contentId, boardId } = data;
 
-  let content;
+  let logs;
 
   try {
     if (!userId || !orgId) throw new Error("Unauthorized");
     if (!contentId || !boardId) throw new Error("Missing fields");
-    content = await db.cardContent.findUnique({
+    logs = await db.log.findMany({
       where: {
-        id: contentId,
-        card: { board: { orgId } },
+        orgId,
+        entityId: contentId,
       },
-      include: {
-        card: true,
+      orderBy: {
+        createdAt: "desc",
       },
+      take: 4,
     });
-    if (!content) throw new Error("No content found with the given criteria");
+
+    if (!logs) throw new Error("No logs found with the given criteria");
   } catch (error) {
     return Promise.reject(error);
   }
 
   revalidatePath(`/board/${boardId}`);
-  return content;
+  return logs;
 };

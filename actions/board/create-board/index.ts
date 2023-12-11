@@ -1,10 +1,14 @@
 "use server";
 
-import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./input-types";
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { ACTION, ENTITY } from "@prisma/client";
+import { auth } from "@clerk/nextjs";
+
+import { db } from "@/lib/db";
 import { safeCreateAction } from "@/lib/safe-create-action";
+import { createLog } from "@/lib/create-log";
+
+import { InputType, ReturnType } from "./input-types";
 import { CreateBoardSchema } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -42,6 +46,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageThumbUrl,
         imageFullUrl,
       },
+    });
+
+    await createLog({
+      entity: ENTITY.BOARD,
+      entityId: board.id,
+      entityTitle: board.title,
+      action: ACTION.CREATE,
     });
   } catch (error) {
     return {

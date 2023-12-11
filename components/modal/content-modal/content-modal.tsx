@@ -17,6 +17,8 @@ import ContentTitle from "./content-title";
 
 import ContentDescription from "./content-description";
 import ContentOptions from "./content-options";
+import { getLogs } from "@/actions/log";
+import ContentActivity from "./content-activity";
 
 type Props = {};
 
@@ -31,6 +33,11 @@ const ContentModal = (props: Props) => {
     queryFn: () => getContentByID({ contentId: id!, boardId: boardId! }),
     enabled: !!id,
   });
+  const { data: logs, error: logErrors } = useQuery({
+    queryKey: ["log", id],
+    queryFn: () => getLogs({ contentId: id!, boardId: boardId! }),
+    enabled: !!id,
+  });
 
   useEffect(() => {
     if (error) {
@@ -41,10 +48,7 @@ const ContentModal = (props: Props) => {
 
   return (
     <Dialog onOpenChange={onClose} open={isOpen}>
-      <DialogContent
-        className="sm:max-w-[425px]"
-        onOpenAutoFocus={(e) => e.preventDefault()}
-      >
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle autoFocus={false}>
             {data ? (
@@ -73,6 +77,11 @@ const ContentModal = (props: Props) => {
                 />
               ) : (
                 <ContentDescription.Skeleton />
+              )}
+              {logs ? (
+                <ContentActivity logs={logs} />
+              ) : (
+                <ContentActivity.Skeleton />
               )}
             </div>
           </div>

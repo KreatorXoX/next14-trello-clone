@@ -1,12 +1,16 @@
 "use server";
 
-import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./input-types";
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { safeCreateAction } from "@/lib/safe-create-action";
-import { DeleteBoardSchema } from "./schema";
 import { redirect } from "next/navigation";
+import { ACTION, ENTITY } from "@prisma/client";
+import { auth } from "@clerk/nextjs";
+
+import { db } from "@/lib/db";
+import { safeCreateAction } from "@/lib/safe-create-action";
+import { createLog } from "@/lib/create-log";
+
+import { InputType, ReturnType } from "./input-types";
+import { DeleteBoardSchema } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -26,6 +30,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         id,
         orgId,
       },
+    });
+
+    await createLog({
+      entity: ENTITY.BOARD,
+      entityId: boardToDelete.id,
+      entityTitle: boardToDelete.title,
+      action: ACTION.DELETE,
     });
   } catch (error) {
     return {

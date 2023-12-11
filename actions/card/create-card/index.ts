@@ -1,10 +1,14 @@
 "use server";
 
-import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./input-types";
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { ACTION, ENTITY } from "@prisma/client";
+import { auth } from "@clerk/nextjs";
+
+import { db } from "@/lib/db";
 import { safeCreateAction } from "@/lib/safe-create-action";
+import { createLog } from "@/lib/create-log";
+
+import { InputType, ReturnType } from "./input-types";
 import { CreateCardSchema } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -43,6 +47,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
           title,
           order: latestCard ? latestCard.order + 1 : 1,
         },
+      });
+      await createLog({
+        entity: ENTITY.CARD,
+        entityId: card.id,
+        entityTitle: card.title,
+        action: ACTION.CREATE,
       });
     }
   } catch (error) {

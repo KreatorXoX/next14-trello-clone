@@ -1,10 +1,12 @@
 "use server";
 
-import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./input-types";
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { auth } from "@clerk/nextjs";
+
+import { db } from "@/lib/db";
 import { safeCreateAction } from "@/lib/safe-create-action";
+
+import { InputType, ReturnType } from "./input-types";
 import { ReorderContentSchema } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
