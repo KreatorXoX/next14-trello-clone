@@ -3,18 +3,22 @@ import { generateLogMessage } from "@/config/generate-log-message";
 import { Log } from "@prisma/client";
 import React from "react";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import { cn } from "@/lib/utils";
 
 type Props = {
   log: Log;
+  large?: boolean;
 };
 
-const ActivityItem = ({ log }: Props) => {
+const ActivityItem = ({ log, large }: Props) => {
   return (
     <li className="flex items-center w-full gap-2">
-      <Avatar className="w-6 h-6">
+      <Avatar className={cn("", large ? "w-10 h-10" : "w-6 h-6")}>
         <AvatarImage src={log.userImage} />
       </Avatar>
-      <div className="flex flex-col text-xs w-full">
+      <div
+        className={cn("flex flex-col w-full", large ? "text-lg" : "text-xs")}
+      >
         <p className="flex items-center gap-2">
           <span className="font-bold">{log.userName}</span>
           <span>

@@ -1,13 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { Log } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-import { Log } from "@prisma/client";
-
-export const getLogs = async (data: {
+export const getLogsByContent = async (data: {
   contentId: string;
   boardId: string;
 }): Promise<Log[]> => {
@@ -18,7 +18,7 @@ export const getLogs = async (data: {
   let logs;
 
   try {
-    if (!userId || !orgId) throw new Error("Unauthorized");
+    if (!userId || !orgId) return redirect("/select-org");
     if (!contentId || !boardId) throw new Error("Missing fields");
     logs = await db.log.findMany({
       where: {

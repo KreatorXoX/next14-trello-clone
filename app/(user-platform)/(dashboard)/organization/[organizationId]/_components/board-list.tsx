@@ -7,24 +7,12 @@ import FormNewBoard from "@/components/form/form-new-board";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAllBoards } from "@/actions/board/get-all-boards";
 
 type Props = {};
 
 const BoardList = async (props: Props) => {
-  const { orgId } = auth();
-
-  if (!orgId) {
-    return redirect("/select-org");
-  }
-
-  const fetchedBoards = await db.board.findMany({
-    where: {
-      orgId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const fetchedBoards = await getAllBoards();
 
   return (
     <div className="space-y-4">

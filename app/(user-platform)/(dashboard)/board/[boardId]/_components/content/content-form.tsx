@@ -40,8 +40,6 @@ const ContentForm = forwardRef<HTMLTextAreaElement, Props>(
         return console.log("no title given");
       }
 
-      console.log({ boardId: params.boardId as string, cardId, title });
-
       execute({ boardId: params.boardId as string, cardId, title });
     };
 

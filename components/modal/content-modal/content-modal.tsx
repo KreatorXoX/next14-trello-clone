@@ -17,7 +17,7 @@ import ContentTitle from "./content-title";
 
 import ContentDescription from "./content-description";
 import ContentOptions from "./content-options";
-import { getLogs } from "@/actions/log";
+import { getLogsByContent } from "@/actions/log/get-logs-by-content";
 import ContentActivity from "./content-activity";
 
 type Props = {};
@@ -35,7 +35,7 @@ const ContentModal = (props: Props) => {
   });
   const { data: logs, error: logErrors } = useQuery({
     queryKey: ["log", id],
-    queryFn: () => getLogs({ contentId: id!, boardId: boardId! }),
+    queryFn: () => getLogsByContent({ contentId: id!, boardId: boardId! }),
     enabled: !!id,
   });
 
