@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 
 import { Activity, CreditCard, Settings, Layout } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useOrganizationList } from "@clerk/nextjs";
 
 export type Organization = {
   id: string;
@@ -35,6 +36,7 @@ const OrganizationItem = ({
 }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { setActive } = useOrganizationList();
   const routes = [
     {
       label: "Boards",
@@ -59,6 +61,8 @@ const OrganizationItem = ({
   ];
 
   const onClick = (href: string) => {
+    if (!setActive) return;
+    setActive({ organization: organization.id });
     router.replace(href);
   };
   return (

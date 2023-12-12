@@ -23,30 +23,39 @@ model Board {
 }
 
 model Card {
-   id    String   @id @default(auto()) @map("_id") @db.ObjectId
-   title String 
-   order Int
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  order Int
 
-   boardId String @db.ObjectId
-   board Board @relation(fields: [boardId],references: [id],onDelete:Cascade) 
+  boardId String @db.ObjectId
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
-   contents CardContent[]   
+  contents CardContent[]
 
-   createdAt       DateTime @default(now())
-   updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model CardContent {
-   id    String   @id @default(auto()) @map("_id") @db.ObjectId
-   title String 
-   order Int
-   description String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  order       Int
+  description String?
 
-   cardId  String @db.ObjectId
-   card Card @relation(fields: [cardId],references: [id],onDelete:Cascade)
-   
-   createdAt       DateTime @default(now())
-   updatedAt       DateTime @updatedAt
+  cardId String @db.ObjectId
+  card   Card   @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Limitation {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  orgId String @unique
+  limit Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum ACTION {
@@ -56,24 +65,33 @@ enum ACTION {
 }
 
 enum ENTITY {
-BOARD
-CARD
-CONTENT
+  BOARD
+  CARD
+  CONTENT
 }
 
 model Log {
-id    String   @id @default(auto()) @map("_id") @db.ObjectId
-orgId String
-userId String
-userImage String
-userName String
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  orgId     String @unique
+  userId    String
+  userImage String
+  userName  String
 
-action ACTION
+  action ACTION
 
-entity ENTITY
-entityId String
-entityTitle String
+  entity      ENTITY
+  entityId    String
+  entityTitle String
 
-createdAt       DateTime @default(now())
-updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
+  orgId                  String    @unique
+  stripeCustomerId       String?   @unique
+  stripeSubscriptionId   String?   @unique
+  stripePriceId          String?   @unique
+  stripeCurrentPeriodEnd DateTime?
 }

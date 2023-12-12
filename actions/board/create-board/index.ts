@@ -7,6 +7,10 @@ import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { safeCreateAction } from "@/lib/safe-create-action";
 import { createLog } from "@/lib/create-log";
+import {
+  increaseLimitCount,
+  exceededLimitation,
+} from "@/lib/change-limitation";
 
 import { InputType, ReturnType } from "./input-types";
 import { CreateBoardSchema } from "./schema";
@@ -17,6 +21,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   if (!userId || !orgId)
     return {
       error: "Unauthorized",
+    };
+
+  const exceededFreeTier = await exceededLimitation();
+
+  if (exceededFreeTier)
+    return {
+      error: "You have exceeded the number of free boards you can use !",
     };
 
   const { title, image } = data;
@@ -47,6 +58,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageFullUrl,
       },
     });
+
+    await increaseLimitCount();
 
     await createLog({
       entity: ENTITY.BOARD,

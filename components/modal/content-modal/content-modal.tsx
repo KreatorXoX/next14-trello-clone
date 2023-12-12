@@ -10,15 +10,16 @@ import {
 import React, { useEffect } from "react";
 import { useContentModal } from "@/hooks/useContentModal";
 import { useQuery } from "@tanstack/react-query";
-import { getContentByID } from "@/actions/content/get-content";
+
 import toast from "react-hot-toast";
 
 import ContentTitle from "./content-title";
 
 import ContentDescription from "./content-description";
 import ContentOptions from "./content-options";
-import { getLogsByContent } from "@/actions/log/get-logs-by-content";
+import { getLogsByContent } from "@/lib/get-logs-by-content";
 import ContentActivity from "./content-activity";
+import { getContentById } from "@/lib/get-content-by-id";
 
 type Props = {};
 
@@ -30,7 +31,7 @@ const ContentModal = (props: Props) => {
 
   const { data, error } = useQuery({
     queryKey: ["content", id],
-    queryFn: () => getContentByID({ contentId: id!, boardId: boardId! }),
+    queryFn: () => getContentById({ contentId: id!, boardId: boardId! }),
     enabled: !!id,
   });
   const { data: logs, error: logErrors } = useQuery({

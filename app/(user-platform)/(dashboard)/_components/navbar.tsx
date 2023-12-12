@@ -17,7 +17,7 @@ const Navbar = (props: Props) => {
           <Logo black />
           <FormNewBoard side="bottom" align="start">
             <Button size={"sm"} className="rounded-lg" variant={"primary"}>
-              Create Organization
+              Create New Board
             </Button>
           </FormNewBoard>
         </div>

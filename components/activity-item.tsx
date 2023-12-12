@@ -19,7 +19,7 @@ const ActivityItem = ({ log, large }: Props) => {
       <div
         className={cn("flex flex-col w-full", large ? "text-lg" : "text-xs")}
       >
-        <p className="flex items-center gap-2">
+        <p className=" space-x-2">
           <span className="font-bold">{log.userName}</span>
           <span>
             {generateLogMessage({

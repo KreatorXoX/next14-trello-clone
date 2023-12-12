@@ -1,7 +1,7 @@
 import React from "react";
 import { OrganizationProfile } from "@clerk/nextjs";
 type Props = {};
-
+// export const dynamic = "force-dynamic";
 const SettingsPage = (props: Props) => {
   return (
     <div className="w-full">

@@ -1,8 +1,9 @@
-import { getAllLogs } from "@/actions/log/get-all-logs";
+import React from "react";
+
+import { getAllLogs } from "@/lib/get-all-logs";
+
 import ActivityItem from "@/components/activity-item";
 import { Skeleton } from "@/components/ui/skeleton";
-
-import React from "react";
 
 type Props = { orgId: string };
 

@@ -11,6 +11,7 @@ import { createLog } from "@/lib/create-log";
 
 import { InputType, ReturnType } from "./input-types";
 import { DeleteBoardSchema } from "./schema";
+import { decreaseLimitCount } from "@/lib/change-limitation";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -31,6 +32,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         orgId,
       },
     });
+
+    await decreaseLimitCount();
 
     await createLog({
       entity: ENTITY.BOARD,

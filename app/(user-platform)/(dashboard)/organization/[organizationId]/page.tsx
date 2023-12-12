@@ -3,6 +3,7 @@ import OrganizationAvatar from "./_components/organization-avatar";
 import { Separator } from "@/components/ui/separator";
 import BoardList from "./_components/board-list";
 
+// export const dynamic = "force-dynamic";
 const OrganizationPage = ({
   params: { organizationId },
 }: {

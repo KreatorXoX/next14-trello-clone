@@ -3,6 +3,7 @@ import ActivityList from "./_components/activity-list";
 import OrganizationAvatar from "../_components/organization-avatar";
 import { Separator } from "@/components/ui/separator";
 
+// export const dynamic = "force-dynamic";
 const AcitivityPage = ({
   params: { organizationId },
 }: {

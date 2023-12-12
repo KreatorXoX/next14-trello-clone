@@ -1,24 +1,25 @@
 import React from "react";
-import { OrganizationController } from "./_components/organization-controller";
-import { auth } from "@clerk/nextjs";
+
+import { clerkClient } from "@clerk/nextjs";
 
 type Props = { children: React.ReactNode };
-
-export async function generateMetadata() {
-  const { orgSlug } = auth();
+export const dynamic = "force-dynamic";
+export async function generateMetadata({
+  params: { organizationId },
+}: {
+  params: { organizationId: string };
+}) {
+  const organization = await clerkClient.organizations.getOrganization({
+    organizationId,
+  });
 
   return {
-    title: orgSlug?.toUpperCase() || "Anonymous",
+    title: organization.slug?.toUpperCase() || "Anonymous",
   };
 }
 
 const OrganizationIdLayout = ({ children }: Props) => {
-  return (
-    <>
-      <OrganizationController />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default OrganizationIdLayout;

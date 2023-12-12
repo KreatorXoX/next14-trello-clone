@@ -1,12 +1,10 @@
-"use server";
-
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
 import { ContentWithCard } from "@/types";
 
-export const getContentByID = async (data: {
+export const getContentById = async (data: {
   contentId: string;
   boardId: string;
 }): Promise<ContentWithCard> => {

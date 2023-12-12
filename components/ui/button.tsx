@@ -26,7 +26,7 @@ const buttonVariants = cva(
         copy: "bg-neutral-100 text-neutral-500 hover:bg-neutral-500 hover:text-neutral-100 transition",
       },
       size: {
-        xs_rounded: "w-4 h-4 rounded-full",
+        xs_rounded: "w-5 h-5 rounded-full p-1",
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",

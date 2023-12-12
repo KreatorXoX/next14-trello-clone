@@ -1,13 +1,13 @@
 import React from "react";
-
+import Link from "next/link";
 import { ClipboardList, FileQuestion } from "lucide-react";
 
 import CustomTooltip from "@/components/custom-tooltip";
 import FormNewBoard from "@/components/form/form-new-board";
 
-import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getAllBoards } from "@/actions/board/get-all-boards";
+import { getAllBoards } from "@/lib/get-all-boards";
+import { availableBoardCount } from "@/lib/change-limitation";
 
 type Props = {
   orgId: string;
@@ -15,6 +15,9 @@ type Props = {
 
 const BoardList = async ({ orgId }: Props) => {
   const fetchedBoards = await getAllBoards(orgId);
+  const fetchedCount = await availableBoardCount();
+
+  const [boards, count] = await Promise.all([fetchedBoards, fetchedCount]);
 
   return (
     <div className="space-y-4">
@@ -31,14 +34,14 @@ const BoardList = async ({ orgId }: Props) => {
           >
             <p>Create new board</p>
             <span className="text-xs flex items-center gap-1 italic">
-              3 remaining
-              <CustomTooltip innerText="As free tier user you can only have 5 boards at most. Subscribe to get unlimited board">
+              {count} remaining
+              <CustomTooltip innerText="As free tier user you can only have 3 boards at most. Subscribe to get unlimited board">
                 <FileQuestion className="w-5 h-5 text-rose-300" />
               </CustomTooltip>
             </span>
           </div>
         </FormNewBoard>
-        {fetchedBoards.map((board) => {
+        {boards.map((board) => {
           return (
             <Link
               href={`/board/${board.id}`}

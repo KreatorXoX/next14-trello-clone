@@ -36,14 +36,14 @@ const OrganizationAvatar = async ({ orgId }: Props) => {
         <div className="flex items-center gap-1 font-medium">
           <p>{organization?.name.toUpperCase()}</p>
 
-          <span className="text-xs text-neutral-500 italic">
-            {organization?.members_count +
+          {/* <span className="text-xs text-neutral-500 italic">
+            {organization.members_count +
               `${
                 organization?.members_count && organization.members_count > 1
                   ? " - Members"
                   : " - Member"
               }`}
-          </span>
+          </span> */}
         </div>
         <p className="text-xs flex flex-row gap-1 text-neutral-500 items-center italic">
           <Receipt className="w-4 h-4" />
