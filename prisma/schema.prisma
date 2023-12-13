@@ -72,7 +72,7 @@ enum ENTITY {
 
 model Log {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
-  orgId     String @unique
+  orgId     String
   userId    String
   userImage String
   userName  String

@@ -12,6 +12,7 @@ import { createLog } from "@/lib/create-log";
 import { InputType, ReturnType } from "./input-types";
 import { DeleteBoardSchema } from "./schema";
 import { decreaseLimitCount } from "@/lib/change-limitation";
+import { checkSubscription } from "@/lib/subcription";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -20,6 +21,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     return {
       error: "Unauthorized",
     };
+
+  const isSubscribed = await checkSubscription();
 
   const { id } = data;
 
@@ -33,7 +36,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
-    await decreaseLimitCount();
+    if (!isSubscribed) await decreaseLimitCount();
 
     await createLog({
       entity: ENTITY.BOARD,

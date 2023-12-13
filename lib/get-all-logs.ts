@@ -22,10 +22,10 @@ export const getAllLogs = async (orgId: string): Promise<Log[]> => {
     });
 
     if (!logs) throw new Error("No logs found with the given criteria");
+
+    revalidatePath(`/organization/${orgId}`);
+    return logs;
   } catch (error) {
     return Promise.reject(error);
   }
-
-  revalidatePath(`/organization/${orgId}`);
-  return logs;
 };

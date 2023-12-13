@@ -21,10 +21,10 @@ export const getAllBoards = async (orgId: string): Promise<Board[]> => {
     });
 
     if (!boards) throw new Error("No logs found with the given criteria");
+
+    revalidatePath(`/organization/${orgId}`);
+    return boards;
   } catch (error) {
     return Promise.reject(error);
   }
-
-  revalidatePath(`/organization/${orgId}`);
-  return boards;
 };

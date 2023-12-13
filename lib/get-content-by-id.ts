@@ -27,10 +27,10 @@ export const getContentById = async (data: {
       },
     });
     if (!content) throw new Error("No content found with the given criteria");
+
+    revalidatePath(`/board/${boardId}`);
+    return content;
   } catch (error) {
     return Promise.reject(error);
   }
-
-  revalidatePath(`/board/${boardId}`);
-  return content;
 };

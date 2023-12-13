@@ -18,6 +18,7 @@ import { FormInput } from "./form-input";
 import FormSubmitButton from "./form-submit";
 import FormBackgroundPicker from "./form-background-picker";
 import { useRouter } from "next/navigation";
+import { useSubscriptionModal } from "@/hooks/useSubscriptionModal";
 
 type Props = {
   children: React.ReactNode;
@@ -34,6 +35,9 @@ const FormNewBoard = ({
 }: Props) => {
   const router = useRouter();
   const closeRef = useRef<ElementRef<"button">>(null);
+
+  const onOpen = useSubscriptionModal((state) => state.onOpen);
+
   const { execute, fieldErrors } = useAction(createNewBoard, {
     onSuccess: (data) => {
       toast.success("New board created");
@@ -43,6 +47,7 @@ const FormNewBoard = ({
     },
     onError: (err) => {
       toast.error(err);
+      onOpen();
     },
   });
 

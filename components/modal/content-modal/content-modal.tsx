@@ -34,7 +34,7 @@ const ContentModal = (props: Props) => {
     queryFn: () => getContentById({ contentId: id!, boardId: boardId! }),
     enabled: !!id,
   });
-  const { data: logs, error: logErrors } = useQuery({
+  const { data: logs } = useQuery({
     queryKey: ["log", id],
     queryFn: () => getLogsByContent({ contentId: id!, boardId: boardId! }),
     enabled: !!id,

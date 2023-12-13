@@ -138,7 +138,6 @@ const CardList = ({ boardId, data }: Props) => {
               })}
               {provided.placeholder}
               <CardForm />
-              <div className="flex-shrink-0 w-1 bg-red-500"></div>
             </ul>
           );
         }}

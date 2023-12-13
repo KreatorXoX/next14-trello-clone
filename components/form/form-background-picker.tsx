@@ -19,7 +19,9 @@ const FormBackgroundPicker = ({ id, errors }: Props) => {
   const [images, setImages] = useState<Record<string, any>[]>(fallbackImages);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState<any | null>(null);
+  const [selectedImage, setSelectedImage] = useState<any | null>(
+    fallbackImages[0]
+  );
   const { pending } = useFormStatus();
 
   useEffect(() => {

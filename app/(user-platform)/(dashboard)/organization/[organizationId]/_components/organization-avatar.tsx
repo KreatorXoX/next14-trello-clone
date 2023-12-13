@@ -3,9 +3,9 @@ import { clerkClient } from "@clerk/nextjs";
 import { Receipt } from "lucide-react";
 import Image from "next/image";
 
-type Props = { orgId: string };
+type Props = { orgId: string; isSubscribed: boolean };
 
-const OrganizationAvatar = async ({ orgId }: Props) => {
+const OrganizationAvatar = async ({ orgId, isSubscribed }: Props) => {
   const organization = await clerkClient.organizations.getOrganization({
     organizationId: orgId,
   });
@@ -47,7 +47,7 @@ const OrganizationAvatar = async ({ orgId }: Props) => {
         </div>
         <p className="text-xs flex flex-row gap-1 text-neutral-500 items-center italic">
           <Receipt className="w-4 h-4" />
-          <span>Free</span>
+          {isSubscribed ? <span>Subscribed</span> : <span>Free</span>}
         </p>
       </div>
     </div>

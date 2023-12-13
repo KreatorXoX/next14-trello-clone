@@ -30,10 +30,9 @@ export const getLogsByContent = async (data: {
     });
 
     if (!logs) throw new Error("No logs found with the given criteria");
+    revalidatePath(`/board/${boardId}`);
+    return logs;
   } catch (error) {
     return Promise.reject(error);
   }
-
-  revalidatePath(`/board/${boardId}`);
-  return logs;
 };

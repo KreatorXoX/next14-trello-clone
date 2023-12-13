@@ -1,11 +1,10 @@
-import React, { Suspense } from "react";
-import ActivityList from "./_components/activity-list";
+import React from "react";
 import OrganizationAvatar from "../_components/organization-avatar";
-import { Separator } from "@/components/ui/separator";
 import { checkSubscription } from "@/lib/subcription";
+import { Separator } from "@/components/ui/separator";
+import SubscriptionButton from "./_components/subscription-button";
 
-// export const dynamic = "force-dynamic";
-const AcitivityPage = async ({
+const BillingPage = async ({
   params: { organizationId },
 }: {
   params: { organizationId: string };
@@ -15,11 +14,9 @@ const AcitivityPage = async ({
     <div className="w-full">
       <OrganizationAvatar orgId={organizationId} isSubscribed={isSubscribed} />
       <Separator className="my-3" />
-      <Suspense fallback={<ActivityList.Skeleton />}>
-        <ActivityList orgId={organizationId} />
-      </Suspense>
+      <SubscriptionButton isSubscribed={isSubscribed} />
     </div>
   );
 };
 
-export default AcitivityPage;
+export default BillingPage;

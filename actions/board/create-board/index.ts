@@ -14,6 +14,8 @@ import {
 
 import { InputType, ReturnType } from "./input-types";
 import { CreateBoardSchema } from "./schema";
+import { checkSubscription } from "@/lib/subcription";
+import { is } from "date-fns/locale";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -24,8 +26,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
 
   const exceededFreeTier = await exceededLimitation();
-
-  if (exceededFreeTier)
+  const isSubscribed = await checkSubscription();
+  if (exceededFreeTier && !isSubscribed)
     return {
       error: "You have exceeded the number of free boards you can use !",
     };
@@ -59,7 +61,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
-    await increaseLimitCount();
+    if (!isSubscribed) await increaseLimitCount();
 
     await createLog({
       entity: ENTITY.BOARD,
