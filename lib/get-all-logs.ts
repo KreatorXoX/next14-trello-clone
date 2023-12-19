@@ -1,3 +1,4 @@
+"use server";
 import { revalidatePath } from "next/cache";
 import { Log } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
